@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محل زهرة الربيع | تجربة تسوق فاخرة</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* --- 1. المتغيرات والتنسيق الأساسي (Luxury Dark Mode) --- */
+        :root {
+            --primary-bg: #1A1A1A; /* أسود عميق للخلفية الأساسية */
+            --secondary-bg: #2C2C2C; /* رمادي داكن للبطاقات والأقسام */
+            --accent-gold: #FFC300; /* الذهبي الصارخ والمميز */
+            --text-light: #F0F0F0; /* نص فاتح جداً */
+            --text-muted: #A0A0A0; /* نص ثانوي / وصف */
+            --shadow-lux: 0 4px 15px rgba(0, 0, 0, 0.5); /* ظل داكن عميق */
+            --shadow-gold: 0 0 15px rgba(255, 195, 0, 0.4);
+            --font-main: 'Almarai', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            line-height: 1.6;
+            direction: rtl;
+            text-align: right;
+            max-width: 600px; 
+            margin: 0 auto;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        a { text-decoration: none; color: var(--accent-gold); transition: all 0.3s ease; }
+
+        /* --- 2. الرأس (Header) - نظيف وعائم --- */
+        header {
+            background-color: var(--secondary-bg);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lux);
+            border-bottom: 2px solid #333;
+        }
+
+        .logo h1 { font-size: 1.8rem; color: var(--text-light); font-weight: 800; }
+        .logo span { color: var(--accent-gold); font-size: 2rem; }
+
+        .header-icons a { font-size: 1.2rem; color: var(--text-light); margin-right: 15px; }
+        .hamburger-menu {
+            background: none; border: none; font-size: 1.6rem;
+            color: var(--accent-gold); cursor: pointer; padding: 5px 10px;
+            order: -1;
+            border: 1px solid var(--accent-gold); 
+            border-radius: 4px;
+        }
+        
+        /* --- 3. القائمة الجانبية (Sleek Drawer) --- */
+        .off-canvas-menu {
+            position: fixed; top: 0; left: -80%; width: 80%; height: 100%;
+            background-color: #121212; 
+            padding: 30px 20px; box-shadow: 5px 0 20px rgba(0, 0, 0, 0.8);
+            transition: left 0.4s ease-out; z-index: 2000;
+            border-right: 4px solid var(--accent-gold); 
+        }
+
+        .off-canvas-menu.active { left: 0; }
+        
+        .off-canvas-menu h3 {
+            color: var(--accent-gold); font-size: 1.4rem; font-weight: 800;
+            margin-bottom: 25px; padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .off-canvas-menu a {
+            color: var(--text-light); padding: 15px 10px; margin-bottom: 5px;
+            display: flex; align-items: center; font-size: 1.1rem;
+            border-radius: 6px; position: relative;
+        }
+        
+        .off-canvas-menu a i { margin-left: 10px; font-size: 1.2rem; color: var(--accent-gold); }
+
+        .off-canvas-menu a:hover {
+            background-color: #333333;
+            transform: translateX(5px); 
+        }
+        
+        /* --- 4. العناوين الاحترافية (Headings) --- */
+        main { padding: 30px 5%; }
+
+        .section-title {
+            font-size: 2.2rem; 
+            color: var(--accent-gold); 
+            margin-bottom: 40px;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(255, 195, 0, 0.2);
+            border-bottom: 3px solid var(--accent-gold);
+            padding-bottom: 8px;
+            display: block; 
+        }
+        
+        /* --- 5. بطاقات المنتج (Product Cards) - تحسينات جمالية جديدة --- */
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px; /* زيادة التباعد بين البطاقات */
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background-color: var(--secondary-bg);
+            border-radius: 15px; /* حواف أكثر دائرية */
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.7), /* ظل عميق جداً */
+                0 0 0 1px rgba(255, 195, 0, 0.1); /* إطار ذهبي ناعم جداً */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s, border-color 0.3s;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            cursor: pointer; /* للإشارة إلى إمكانية النقر */
+            border: 1px solid transparent; /* للحفاظ على الشكل عند الـ hover */
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.03); /* حركة بارزة جداً */
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.9), /* ظل أعمق عند التمرير */
+                0 0 0 2px var(--accent-gold); /* إطار ذهبي أوضح */
+            border-color: var(--accent-gold);
+        }
+
+        .product-card .img-container {
+            width: 45%;
+            min-width: 150px;
+            height: 180px;
+            overflow: hidden;
+            background: linear-gradient(45deg, #333, #1A1A1A); /* تدرج لوني للخلفية */
+            position: relative; /* لزر المعرض */
+            border-top-right-radius: 15px; /* حواف دائرية للصورة */
+            border-bottom-right-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #2a2a2a, #000); /* تدرج لوني للـ placeholder */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-style: italic;
+            position: relative; /* للشعار */
+        }
+
+        .img-placeholder::before {
+            content: 'KS'; /* شعار 'كمال ستايل' */
+            position: absolute;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: rgba(255, 195, 0, 0.2); /* ذهبي خافت جداً */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .view-gallery-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(26, 26, 26, 0.6); /* خلفية شبه شفافة */
+            backdrop-filter: blur(5px); /* تأثير الزجاج */
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 20px; /* زر بيضاوي */
+            z-index: 50;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .view-gallery-btn:hover { background-color: rgba(255, 195, 0, 0.2); }
+
+        .product-info {
+            padding: 20px; /* تباعد داخلي أكبر */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .product-info h4 {
+            font-size: 1.4rem; /* عنوان أكبر */
+            color: var(--text-light);
+            margin-bottom: 5px;
+            font-weight: 800; /* أكثر جرأة */
+        }
+        
+        .product-info p.description {
+            font-size: 0.9rem; /* وصف أوضح */
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .price-and-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px; /* تباعد أكبر */
+        }
+
+        .product-card .price {
+            color: var(--accent-gold);
+            font-size: 1.6rem; /* سعر بارز جداً */
+            font-weight: 800;
+            text-shadow: 0 0 5px rgba(255, 195, 0, 0.3);
+        }
+
+        .product-card button {
+            background-color: var(--accent-gold);
+            color: var(--primary-bg);
+            border: none;
+            padding: 10px 22px; /* زر شراء أكبر */
+            border-radius: 30px; /* زر بيضاوي للشراء */
+            font-weight: 800; /* نص زر الشراء أكثر جرأة */
+            font-size: 0.95rem;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 195, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .product-card button:hover { 
+            background-color: #e0ac00; 
+            transform: translateY(-2px); /* حركة خفيفة عند التمرير */
+        }
+        
+        /* --- 6. معرض صور المنتج (Gallery Modal) --- */
+        #gallery-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.98); /* خلفية أغمق */
+            display: none; align-items: center; justify-content: center;
+            z-index: 5000; opacity: 0; transition: opacity 0.3s;
+        }
+
+        #gallery-modal.active { display: flex; opacity: 1; }
+
+        .gallery-content {
+            width: 95%; max-width: 550px; /* أكبر قليلاً */
+            background: #121212; /* خلفية أغمق للمحتوى */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--accent-gold);
+            position: relative;
+        }
+        
+        .gallery-content h4 {
+            background-color: #222;
+            padding: 15px; /* تباعد أكبر */
+            text-align: center;
+            border-bottom: 1px solid #444;
+            color: var(--accent-gold);
+            font-size: 1.3rem; /* عنوان أكبر */
+        }
+
+        .gallery-images {
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            max-height: 450px; /* ارتفاع أكبر للصور */
+        }
+        
+        .gallery-images::-webkit-scrollbar { display: none; }
+
+        .gallery-images img {
+            min-width: 100%;
+            height: auto;
+            scroll-snap-align: start;
+        }
+        
+        /* Placeholder داخل المعرض */
+        .gallery-images .img-placeholder {
+            background: linear-gradient(45deg, #3a3a3a, #1a1a1a);
+            font-size: 1.1rem;
+        }
+        
+        .gallery-thumbnails {
+            display: flex; justify-content: center; padding: 12px;
+            background: #222; /* خلفية أغمق للمصغرات */
+        }
+
+        .gallery-thumbnails .thumb {
+            width: 60px; height: 60px; margin: 0 7px; cursor: pointer;
+            border: 3px solid transparent; opacity: 0.7;
+            transition: border-color 0.2s, opacity 0.2s;
+            background-color: #000;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-radius: 8px;
+        }
+        
+        .gallery-thumbnails .thumb.active { border-color: var(--accent-gold); opacity: 1; }
+        
+        .close-gallery-btn {
+            position: absolute; top: 15px; right: 15px; font-size: 1.8rem;
+            color: var(--text-light); z-index: 5010; cursor: pointer;
+        }
+
+        /* --- 7. نموذج الطلب (Checkout Modal) - Professional Input Fields --- */
+        
+        .form-content { border: 2px solid var(--accent-gold); } 
+
+        .form-group {
+            margin-bottom: 20px; /* تباعد أكبر بين الحقول */
+            position: relative; 
+        }
+        
+        .form-group label { 
+            font-size: 0.9rem; color: var(--accent-gold); 
+            display: block; margin-bottom: 8px; 
+            font-weight: 700;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 14px; border-radius: 10px; /* حواف أكثر دائرية */
+            background-color: #222; color: var(--text-light);
+            border: 1px solid #555;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            padding-right: 50px; /* مساحة أكبر للأيقونة */
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 8px rgba(255, 195, 0, 0.5); /* ظل ذهبي أكبر */
+        }
+        
+        .form-group i { 
+            position: absolute; left: 15px; top: 50%; 
+            transform: translateY(0%); /* تعديل لموقع الأيقونة */
+            color: var(--text-muted); 
+            font-size: 1.1rem;
+        }
+        
+        /* تخصص لحقل الهاتف والعنوان لتجنب تداخل الأيقونات مع اتجاه النص */
+        .form-group input[type="tel"], .form-group textarea {
+            padding-right: 50px; 
+        }
+        
+        #total-price { 
+            background-color: #333 !important; 
+            border: 2px solid var(--accent-gold) !important; 
+            color: var(--accent-gold);
+            font-size: 1.8rem !important; /* حجم أكبر */
+            text-align: center;
+            padding: 15px !important;
+            border-radius: 10px !important;
+        }
+        
+        #submit-button {
+            background-color: var(--accent-gold);
+            color: var(--primary-bg);
+            font-size: 1.2rem; /* زر أكبر */
+            width: 100%;
+            padding: 18px; /* تباعد أكبر */
+            border-radius: 12px; /* حواف دائرية أكثر */
+            font-weight: 800; 
+            box-shadow: 0 6px 15px rgba(255, 195, 0, 0.4);
+        }
+        
+        /* تعديلات بسيطة على الـ Footer */
+        footer { font-weight: 300; }
+        
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="hamburger-menu" onclick="toggleMenu()">
+            <i class="fas fa-th-list"></i>
+        </button>
+        <div class="logo">
+            <h1>كمال ستايل <span>🔥</span></h1>
+        </div>
+        <div class="header-icons">
+            <a href="javascript:void(0);" onclick="showOrderForm()" aria-label="سلة التسوق">
+                <i class="fas fa-shopping-bag"></i> (<span id="cart-count">0</span>)
+            </a>
+        </div>
+    </header>
+
+    <nav class="off-canvas-menu" id="offCanvasMenu">
+        <button class="close-menu-btn" onclick="toggleMenu()" style="position: absolute; top: 15px; left: 15px; font-size: 2rem; color: var(--text-muted); background: none; border: none;">&times;</button>
+        <h3><i class="fas fa-star"></i> دليل المتجر الفاخر</h3>
+        <a href="#home" onclick="toggleMenu()"><i class="fas fa-home"></i> الرئيسية</a>
+        <a href="#products" onclick="toggleMenu()"><i class="fas fa-tshirt"></i> تصفح المنتجات</a>
+        <a href="javascript:void(0);" onclick="showOrderForm(); toggleMenu();"><i class="fas fa-receipt"></i> إتمام الشراء</a>
+        <a href="#contact" onclick="toggleMenu()"><i class="fas fa-headset"></i> مركز الدعم</a>
+        
+        <hr style="border-color: #333; margin: 20px 0;">
+        
+        <h3><i class="fas fa-envelope"></i> تواصل اجتماعي</h3>
+        <a href="#" class="social-link" onclick="toggleMenu()"><i class="fab fa-facebook-f"></i> الفيسبوك</a>
+        <a href="https://wa.me/XXXXXXXXXX" target="_blank" class="social-link" onclick="toggleMenu()"><i class="fab fa-whatsapp"></i> واتساب عمو كمال</a>
+    </nav>
+
+    <main>
+        
+        <section id="home" class="hero">
+            <h2>إطلالة استثنائية تبدأ هنا.</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">تصميمات حصرية وجودة لا تقبل المساومة.</p>
+            <a href="#products" class="cta-button">ابدأ التجربة الفاخرة <i class="fas fa-arrow-left"></i></a>
+        </section>
+
+        <section id="products" class="product-showcase">
+            <h2 class="section-title">👖 مجموعة السراويل والجينز الحصرية</h2>
+
+            <div class="product-grid">
+                
+                <div class="product-card" data-name="جينز كلاسيكي أزرق داكن" data-price="15000"
+                     data-images="classic_jeans.jpg,classic_jeans_2.jpg,classic_jeans_3.jpg,classic_jeans_4.jpg">
+                    <div class="img-container" onclick="showGallery('جينز كلاسيكي أزرق داكن', 'classic_jeans.jpg,classic_jeans_2.jpg,classic_jeans_3.jpg,classic_jeans_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <h4>جينز كلاسيكي (Slim Fit)</h4>
+                            <p class="description">دينم فاخر بخياطة مزدوجة، قصة مريحة وعصرية.</p>
+                        </div>
+                        <div class="price-and-action">
+                            <p class="price">15000 د.ج</p>
+                            <button onclick="addToOrder('جينز كلاسيكي أزرق داكن', 15000)">إضافة للسلة <i class="fas fa-cart-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-name="بنطال تشينو بيج" data-price="12500"
+                     data-images="beige_chino.jpg,beige_chino_2.jpg,beige_chino_3.jpg,beige_chino_4.jpg">
+                    <div class="img-container" onclick="showGallery('بنطال تشينو بيج', 'beige_chino.jpg,beige_chino_2.jpg,beige_chino_3.jpg,beige_chino_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>بنطال تشينو (بيج فاتح)</h4><p class="description">قطن مصري ناعم، مثالي لإطلالات العمل الذكية.</p></div>
+                        <div class="price-and-action"><p class="price">12500 د.ج</p><button onclick="addToOrder('بنطال تشينو بيج', 12500)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-name="سروال رياضي أسود" data-price="9000"
+                     data-images="black_jogger.jpg,black_jogger_2.jpg,black_jogger_3.jpg,black_jogger_4.jpg">
+                    <div class="img-container" onclick="showGallery('سروال رياضي أسود', 'black_jogger.jpg,black_jogger_2.jpg,black_jogger_3.jpg,black_jogger_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>سروال رياضي (Jogger)</h4><p class="description">قماش تقني مطاطي، مظهر رياضي حاد.</p></div>
+                        <div class="price-and-action"><p class="price">9000 د.ج</p><button onclick="addToOrder('سروال رياضي أسود', 9000)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-name="جينز أسود ممزق" data-price="16500"
+                     data-images="black_ripped.jpg,black_ripped_2.jpg,black_ripped_3.jpg,black_ripped_4.jpg">
+                    <div class="img-container" onclick="showGallery('جينز أسود ممزق', 'black_ripped.jpg,black_ripped_2.jpg,black_ripped_3.jpg,black_ripped_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>جينز أسود (Ripped Style)</h4><p class="description">تصميم عصري وجريء، مع ثنيات مدروسة.</p></div>
+                        <div class="price-and-action"><p class="price">16500 د.ج</p><button onclick="addToOrder('جينز أسود ممزق', 16500)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="بنطال كارجو زيتي" data-price="14000"
+                     data-images="olive_cargo.jpg,olive_cargo_2.jpg,olive_cargo_3.jpg,olive_cargo_4.jpg">
+                    <div class="img-container" onclick="showGallery('بنطال كارجو زيتي', 'olive_cargo.jpg,olive_cargo_2.jpg,olive_cargo_3.jpg,olive_cargo_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>بنطال كارجو (لون زيتي)</h4><p class="description">خامة قطنية ثقيلة، جيوب جانبية مخفية وعملية.</p></div>
+                        <div class="price-and-action"><p class="price">14000 د.ج</p><button onclick="addToOrder('بنطال كارجو زيتي', 14000)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="سروال كتان رمادي" data-price="11000"
+                     data-images="grey_linen.jpg,grey_linen_2.jpg,grey_linen_3.jpg,grey_linen_4.jpg">
+                    <div class="img-container" onclick="showGallery('سروال كتان رمادي', 'grey_linen.jpg,grey_linen_2.jpg,grey_linen_3.jpg,grey_linen_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>سروال كتان صيفي (رمادي)</h4><p class="description">خفيف الوزن ومبرد، مثالي لإطلالات الصيف المريحة.</p></div>
+                        <div class="price-and-action"><p class="price">11000 د.ج</p><button onclick="addToOrder('سروال كتان رمادي', 11000)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+
+                <div class="product-card" data-name="جينز أبيض" data-price="17000"
+                     data-images="white_jeans.jpg,white_jeans_2.jpg,white_jeans_3.jpg,white_jeans_4.jpg">
+                    <div class="img-container" onclick="showGallery('جينز أبيض', 'white_jeans.jpg,white_jeans_2.jpg,white_jeans_3.jpg,white_jeans_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>جينز أبيض (Premium)</h4><p class="description">أبيض ناصع، قماش مرن، تصميم إيطالي راقٍ.</p></div>
+                        <div class="price-and-action"><p class="price">17000 د.ج</p><button onclick="addToOrder('جينز أبيض', 17000)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-name="بنطال رسمي كحلي" data-price="18000"
+                     data-images="navy_suit_trousers.jpg,navy_suit_trousers_2.jpg,navy_suit_trousers_3.jpg,navy_suit_trousers_4.jpg">
+                    <div class="img-container" onclick="showGallery('بنطال رسمي كحلي', 'navy_suit_trousers.jpg,navy_suit_trousers_2.jpg,navy_suit_trousers_3.jpg,navy_suit_trousers_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>بنطال رسمي (كحلي)</h4><p class="description">صوف فيرجن، قصة كلاسيكية مستقيمة للمناسبات.</p></div>
+                        <div class="price-and-action"><p class="price">18000 د.ج</p><button onclick="addToOrder('بنطال رسمي كحلي', 18000)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-name="سروال رياضي كحلي" data-price="9500"
+                     data-images="navy_sweatpants.jpg,navy_sweatpants_2.jpg,navy_sweatpants_3.jpg,navy_sweatpants_4.jpg">
+                    <div class="img-container" onclick="showGallery('سروال رياضي كحلي', 'navy_sweatpants.jpg,navy_sweatpants_2.jpg,navy_sweatpants_3.jpg,navy_sweatpants_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>سروال رياضي (Navy)</h4><p class="description">قطن ناعم جداً من الداخل، مثالي للتدفئة.</p></div>
+                        <div class="price-and-action"><p class="price">9500 د.ج</p><button onclick="addToOrder('سروال رياضي كحلي', 9500)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-name="بنطال بني فاتح (Camel)" data-price="13000"
+                     data-images="camel_trousers.jpg,camel_trousers_2.jpg,camel_trousers_3.jpg,camel_trousers_4.jpg">
+                    <div class="img-container" onclick="showGallery('بنطال بني فاتح (Camel)', 'camel_trousers.jpg,camel_trousers_2.jpg,camel_trousers_3.jpg,camel_trousers_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>بنطال بني فاتح (Camel)</h4><p class="description">لون "جملي" فاخر، قماش مطاطي مريح.</p></div>
+                        <div class="price-and-action"><p class="price">13000 د.ج</p><button onclick="addToOrder('بنطال بني فاتح (Camel)', 13000)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                        </div>
+                </div>
+            </div>
+            
+            <h2 class="section-title">👕 التيشرتات الفاخرة</h2>
+            <div class="product-grid">
+                <div class="product-card" data-name="تيشيرت أساسي أبيض" data-price="5500"
+                     data-images="basic_white_tee.jpg,basic_white_tee_2.jpg,basic_white_tee_3.jpg,basic_white_tee_4.jpg">
+                    <div class="img-container" onclick="showGallery('تيشيرت أساسي أبيض', 'basic_white_tee.jpg,basic_white_tee_2.jpg,basic_white_tee_3.jpg,basic_white_tee_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>تيشيرت أساسي أبيض</h4><p class="description">قطن برسومات مخفية، ياقة كلاسيكية.</p></div>
+                        <div class="price-and-action"><p class="price">5500 د.ج</p><button onclick="addToOrder('تيشيرت أساسي أبيض', 5500)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+                
+                <div class="product-card" data-name="قميص بولو مخطط" data-price="8500"
+                     data-images="striped_polo.jpg,striped_polo_2.jpg,striped_polo_3.jpg,striped_polo_4.jpg">
+                    <div class="img-container" onclick="showGallery('قميص بولو مخطط', 'striped_polo.jpg,striped_polo_2.jpg,striped_polo_3.jpg,striped_polo_4.jpg')">
+                        <span class="img-placeholder"></span>
+                        <button class="view-gallery-btn"><i class="fas fa-search-plus"></i> تصفح 4 صور</button>
+                    </div>
+                    <div class="product-info">
+                        <div><h4>قميص بولو مخطط</h4><p class="description">قماش مضلع، أزرار ذهبية، مظهر رياضي راقٍ.</p></div>
+                        <div class="price-and-action"><p class="price">8500 د.ج</p><button onclick="addToOrder('قميص بولو مخطط', 8500)">إضافة للسلة <i class="fas fa-cart-plus"></i></button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <div id="gallery-modal">
+        <div class="gallery-content">
+            <span class="close-gallery-btn" onclick="hideGallery()">&times;</span>
+            <h4 id="gallery-title"></h4>
+            
+            <div class="gallery-images" id="gallery-images-container">
+                </div>
+            
+            <div class="gallery-thumbnails" id="gallery-thumbnails-container">
+                </div>
+        </div>
+    </div>
+
+    <div id="order-form-modal" class="order-form-container">
+        <div class="form-content">
+            <span class="close-btn" onclick="hideOrderForm()" style="float: left; color: var(--text-muted);">&times;</span>
+            <h3 style="text-align: center; margin-bottom: 25px;"><i class="fas fa-credit-card"></i> تأكيد الطلب والشحن</h3>
+            
+            <form id="purchase-form">
+                
+                <div class="form-group">
+                    <label>المنتجات المطلوبة (ملخص الطلب):</label>
+                    <textarea id="order-summary" name="order_summary" rows="4" readonly></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>الإجمالي الكلي (شامل التوصيل):</label>
+                    <input type="text" id="total-price" name="total_price" value="0 د.ج" readonly>
+                </div>
+
+                <hr style="border-color: #333; margin: 15px 0;">
+
+                <div class="form-group">
+                    <label for="client-name">الاسم الكامل:</label>
+                    <input type="text" id="client-name" name="client_name" required>
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="client-phone">رقم الهاتف:</label>
+                    <input type="tel" id="client-phone" name="client_phone" required>
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="client-address">عنوان الشحن (الولاية/البلدية):</label>
+                    <textarea id="client-address" name="client_address" rows="2" required></textarea>
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                
+                <button type="submit" id="submit-button">تأكيد الطلب وإرساله لعمو كمال</button>
+            </form>
+            
+            <div id="response-message"></div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <p>تصميم فاخر وجودة مضمونة. للتواصل: <a href="https://wa.me/XXXXXXXXXX" target="_blank"><i class="fab fa-whatsapp"></i> واتساب عمو كمال</a></p>
+        <p style="font-size: 0.8rem;">&copy; 2025 كمال ستايل. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        // بيانات بوت التلغرام (كما هي)
+        const BOT_TOKEN = '7889525634:AAFVX4GAiIaIddBykK_QQw3Ry3a_9utp5d8';
+        const CHAT_ID = '7845009971'; 
+        const API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+        
+        let order = [];
+        
+        // **************************************************
+        // 1. وظائف معرض الصور (Gallery) - الجديد
+        // **************************************************
+
+        function showGallery(productName, imageList) {
+            const images = imageList.split(',');
+            const container = document.getElementById('gallery-images-container');
+            const thumbnailsContainer = document.getElementById('gallery-thumbnails-container');
+            const modal = document.getElementById('gallery-modal');
+            
+            document.getElementById('gallery-title').textContent = 'معرض صور: ' + productName;
+            container.innerHTML = '';
+            thumbnailsContainer.innerHTML = '';
+
+            images.forEach((imgName, index) => {
+                // إضافة الصورة الكبيرة (نستخدم نفس Placeholder في هذا العرض)
+                const imgElement = document.createElement('div');
+                imgElement.classList.add('img-placeholder'); // استخدام نفس Placeholder للرمز
+                imgElement.textContent = ''; // إزالة النص إذا كان مزعجاً أو إضافة رقم الصورة
+                imgElement.style.minWidth = '100%';
+                imgElement.style.height = '450px';
+                container.appendChild(imgElement);
+
+                // إضافة المصغرة
+                const thumbElement = document.createElement('div');
+                thumbElement.classList.add('thumb');
+                thumbElement.textContent = `ص${index + 1}`;
+                thumbElement.onclick = () => scrollToImage(index);
+                if (index === 0) thumbElement.classList.add('active');
+                thumbnailsContainer.appendChild(thumbElement);
+            });
+
+            modal.classList.add('active');
+            // إعادة التمرير للبداية
+            container.scrollLeft = 0;
+        }
+        
+        function hideGallery() {
+            document.getElementById('gallery-modal').classList.remove('active');
+        }
+
+        function scrollToImage(index) {
+            const container = document.getElementById('gallery-images-container');
+            const imageWidth = container.clientWidth;
+            container.scrollTo({
+                left: imageWidth * index,
+                behavior: 'smooth'
+            });
+            updateThumbnails(index);
+        }
+
+        function updateThumbnails(activeIndex) {
+            const thumbs = document.querySelectorAll('.gallery-thumbnails .thumb');
+            thumbs.forEach((thumb, index) => {
+                thumb.classList.remove('active');
+                if (index === activeIndex) {
+                    thumb.classList.add('active');
+                }
+            });
+        }
+        
+        // ربط التمرير اليدوي بتحديث المصغرات
+        document.getElementById('gallery-images-container').addEventListener('scroll', () => {
+            const container = document.getElementById('gallery-images-container');
+            const imageWidth = container.clientWidth;
+            const scrollPosition = container.scrollLeft;
+            // تحديد أقرب صورة مفعلة
+            const activeIndex = Math.round(scrollPosition / imageWidth);
+            updateThumbnails(activeIndex);
+        });
+
+        // **************************************************
+        // 2. وظائف سلة التسوق والهامبرغر (Cart & Menu)
+        // **************************************************
+        
+        function toggleMenu() {
+            document.getElementById('offCanvasMenu').classList.toggle('active');
+        }
+
+        function addToOrder(name, price) {
+            const existingItem = order.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                order.push({ name, price, quantity: 1 });
+            }
+            updateCartUI();
+            alert(`✅ تم إضافة المنتج: ${name} إلى سلة التسوق.`);
+            showOrderForm(); 
+        }
+        
+        function updateCartUI() {
+            let summaryText = "";
+            let totalPrice = 0;
+            
+            order.forEach((item) => {
+                summaryText += `(${item.quantity}x) ${item.name} | الإجمالي: ${item.price * item.quantity} د.ج\n`;
+                totalPrice += item.price * item.quantity;
+            });
+
+            document.getElementById('order-summary').value = summaryText.trim();
+            document.getElementById('total-price').value = totalPrice.toLocaleString('ar-DZ') + ' د.ج';
+            document.getElementById('cart-count').textContent = order.length;
+        }
+
+        function showOrderForm() {
+            if (order.length === 0) {
+                 alert("سلة التسوق فارغة! يرجى إضافة منتج أولاً.");
+                 return;
+            }
+            document.getElementById('order-form-modal').classList.add('active');
+            updateCartUI();
+        }
+        
+        function hideOrderForm() {
+            document.getElementById('order-form-modal').classList.remove('active');
+        }
+
+        // **************************************************
+        // 3. وظائف الإرسال إلى تلغرام (Telegram API)
+        // **************************************************
+        
+        document.getElementById('purchase-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // (كود الإرسال إلى تلغرام كما في الكود السابق)
+            const clientName = document.getElementById('client-name').value;
+            const clientPhone = document.getElementById('client-phone').value;
+            const clientAddress = document.getElementById('client-address').value;
+            const orderSummary = document.getElementById('order-summary').value;
+            const totalPrice = document.getElementById('total-price').value;
+
+            const message = `
+*👑 طلب شراء (جديد) من كمال ستايل*
+
+*==================================*
+*👤 بيانات العميل:*
+*الاسم:* ${clientName}
+*الهاتف:* \`${clientPhone}\`
+*العنوان:* ${clientAddress}
+*==================================*
+*🛒 تفاصيل الطلبات (${order.length} صنف):*
+${orderSummary}
+*==================================*
+*💰 الإجمالي الكلي:* ${totalPrice}
+
+_ID: ${Math.floor(Date.now() / 1000)} - يرجى التواصل فوراً._
+            `;
+            
+            await sendToTelegram(message);
+        });
+
+        async function sendToTelegram(message) {
+            const responseElement = document.getElementById('response-message');
+            const submitButton = document.getElementById('submit-button');
+            
+            submitButton.disabled = true;
+            submitButton.textContent = 'جاري إرسال الطلب... ⏳';
+            responseElement.style.display = 'none';
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    showMessage('🎉 تم استلام طلبك بنجاح! سيتم التواصل معك قريباً لتأكيد الشحن.', 'green');
+                    document.getElementById('purchase-form').reset();
+                    order = []; 
+                    updateCartUI();
+                    setTimeout(hideOrderForm, 2500); 
+                } else {
+                    showMessage(`❌ حدث خطأ في الإرسال: ${data.description}. يرجى المحاولة لاحقاً.`, 'red');
+                }
+            } catch (error) {
+                showMessage('❌ فشل الاتصال بالإنترنت. حاول مجدداً.', 'red');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'تأكيد الطلب وإرساله لعمو كمال';
+            }
+        }
+
+        function showMessage(msg, color) {
+            const responseElement = document.getElementById('response-message');
+            responseElement.textContent = msg;
+            responseElement.style.backgroundColor = color === 'green' ? '#1f3e21' : '#4d2020';
+            responseElement.style.color = color === 'green' ? '#a5d6a7' : '#ef9a9a';
+            responseElement.style.padding = '10px';
+            responseElement.style.marginTop = '15px';
+            responseElement.style.display = 'block';
+            responseElement.style.borderRadius = '5px';
+        }
+    </script>
+</body>
+          </html>
